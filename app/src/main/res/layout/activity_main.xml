@@ -2,13 +2,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView android:text="hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"/>
+
+    <LinearLayout
+        android:id="@+id/first_row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="150dp"
+        android:gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_people"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/people"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_history"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/history"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_animals"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/animals"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="280dp"
+        android:gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_environment"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/environment"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_memo"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/memo"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image_qa"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/qa"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#00000000" />
+
+    </LinearLayout>
 
 </RelativeLayout>

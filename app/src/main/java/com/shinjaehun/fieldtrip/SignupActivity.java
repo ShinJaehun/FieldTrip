@@ -110,7 +110,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailET.setError("전자메일 형식에 맞게 입력하세요");
+            emailET.setError("메일 형식에 맞게 입력하세요");
             valid = false;
         } else {
             emailET.setError(null);
