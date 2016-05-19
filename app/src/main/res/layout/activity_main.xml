@@ -14,75 +14,90 @@
         android:id="@+id/first_row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="150dp"
-        android:gravity="center_horizontal"
         android:background="@android:color/transparent"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingTop="250dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_people"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/people"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_history"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/history"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image_people"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:clickable="true"
+                android:src="@drawable/people"
+                app:civ_border_color="#00000000"
+                app:civ_border_width="1dp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_animals"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/animals"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="사람들"
+                android:textSize="16dip"/>
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="280dp"
-        android:gravity="center_horizontal"
-        android:background="@android:color/transparent"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_environment"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/environment"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image_history"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:clickable="true"
+                android:src="@drawable/history"
+                app:civ_border_color="#00000000"
+                app:civ_border_width="1dp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_memo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/memo"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="역사"
+                android:textSize="16dip"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/image_qa"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/qa"
-            app:civ_border_width="1dp"
-            app:civ_border_color="#00000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/image_environment"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:clickable="true"
+                android:src="@drawable/environment"
+                app:civ_border_color="#00000000"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="자연환경"
+                android:textSize="16dip"/>
+
+        </LinearLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -13,4 +13,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+        <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc elementum imperdiet nisl ut
+        fringilla. Nulla mollis enim id tellus elementum viverra. Vivamus a dui enim. Nunc mattis
+        dapibus eros, at convallis velit dignissim sed. Vestibulum scelerisque tempor massa in
+        consectetur. Duis congue at sem in ultricies. Fusce dictum sapien ac imperdiet tincidunt.
+        Donec volutpat convallis nisi. Donec auctor quis diam ac gravida. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Morbi sed risus tincidunt, accumsan elit in, porta dolor.
+        Maecenas fermentum pulvinar nisi vehicula interdum.
+    </string>
 </resources>
