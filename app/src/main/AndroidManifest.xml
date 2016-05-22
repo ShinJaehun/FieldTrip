@@ -34,6 +34,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".HistoryActivity" android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".PlaceActivity" android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

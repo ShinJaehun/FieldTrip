@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
  * Created by shinjaehun on 2016-05-20.
  */
 public class PeopleActivity extends AppCompatActivity {
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
