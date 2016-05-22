@@ -34,14 +34,8 @@ public class HistoryActivity extends AppCompatActivity implements AdapterView.On
         initLayout();
 
         placeDAO = new PlaceDAO(this);
-//        initTempData();
 
-        listPlaces = placeDAO.getAllPlaces();
-//        listPlaces = new ArrayList<Place>();
-//        Place p1 = placeDAO.createPlace("history", "국립제주박물관", "p1pic.jpg", "p1map.jpg", "lat1, long1", "국립제주박물관입니다.");
-//        listPlaces.add(p1);
-//        Place p2 = placeDAO.createPlace("history", "신재훈네집", "p2pic.jpg", "p2map.jpg", "lat2, long2", "신재훈님네 집입니다.");
-//        listPlaces.add(p2);
+        listPlaces = placeDAO.getPlacesByType("history");
 
         adapter = new ListPlacesAdapter(this, listPlaces);
 

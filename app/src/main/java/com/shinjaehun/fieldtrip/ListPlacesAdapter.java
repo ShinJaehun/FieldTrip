@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class ListPlacesAdapter extends BaseAdapter {
         if (v == null) {
             v = inflater.inflate(R.layout.list_item_place, parent, false);
             holder = new ViewHolder();
+            holder.imgIcon = (ImageView)v.findViewById(R.id.img_icon);
             holder.txtName = (TextView)v.findViewById(R.id.text_name);
             holder.txtDescription = (TextView)v.findViewById(R.id.text_desc);
             v.setTag(holder);
@@ -56,6 +58,17 @@ public class ListPlacesAdapter extends BaseAdapter {
 
         Place currentItem = getItem(position);
         if (currentItem != null) {
+            switch (currentItem.getPic()) {
+                case "jejumuseum" :
+                    holder.imgIcon.setImageResource(R.drawable.jejumuseum);
+                    break;
+                case "samyangprehistoric" :
+                    holder.imgIcon.setImageResource(R.drawable.samyangprehistoric);
+                    break;
+                default:
+                    holder.imgIcon.setImageResource(R.drawable.noimage);
+                    break;
+            }
             holder.txtName.setText(currentItem.getName());
             holder.txtDescription.setText(currentItem.getDescription());
         }
@@ -72,6 +85,7 @@ public class ListPlacesAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
+        ImageView imgIcon;
         TextView txtName;
         TextView txtDescription;
     }

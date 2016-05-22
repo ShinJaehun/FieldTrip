@@ -80,7 +80,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/image_environment"
+                android:id="@+id/image_nature"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:clickable="true"

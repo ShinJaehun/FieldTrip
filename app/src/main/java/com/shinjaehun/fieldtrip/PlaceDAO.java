@@ -86,6 +86,25 @@ public class PlaceDAO {
         return listPlaces;
     }
 
+    public List<Place> getPlacesByType(String t) {
+        List<Place> listPlaces = new ArrayList<Place>();
+        Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Place place = cursorToPlace(cursor);
+
+                if (place.getType().equals(t)) {
+                    listPlaces.add(place);
+
+                }
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        return listPlaces;
+    }
+
     public Place getPlaceById(long id) {
         Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
                 DBHelper.COLUMN_PLACE_ID + " = ",

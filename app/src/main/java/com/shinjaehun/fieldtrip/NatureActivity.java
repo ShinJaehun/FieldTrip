@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.CollapsibleActionView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,11 +14,10 @@ import android.widget.ListView;
 import java.util.List;
 
 /**
- * Created by shinjaehun on 2016-05-20.
+ * Created by shinjaehun on 2016-05-23.
  */
-public class PeopleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    public static final String TAG = "PeopleActivity";
+public class NatureActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    public static final String TAG = "NatureActivity";
 
     private ListView listViewPlaces;
     private ListPlacesAdapter adapter;
@@ -29,11 +27,13 @@ public class PeopleActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_people);
+        setContentView(R.layout.activity_nature);
 
         initLayout();
+
         placeDAO = new PlaceDAO(this);
-        listPlaces = placeDAO.getPlacesByType("people");
+
+        listPlaces = placeDAO.getPlacesByType("nature");
 
         adapter = new ListPlacesAdapter(this, listPlaces);
 
@@ -41,6 +41,7 @@ public class PeopleActivity extends AppCompatActivity implements AdapterView.OnI
             Log.v(TAG, "place " + i + " : " + listPlaces.get(i).getName());
         }
         listViewPlaces.setAdapter(adapter);
+
     }
 
     private void initLayout() {
@@ -48,7 +49,7 @@ public class PeopleActivity extends AppCompatActivity implements AdapterView.OnI
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        ctl.setTitle("사람들");
+        ctl.setTitle("자연환경");
 
         this.listViewPlaces = (ListView)findViewById(R.id.list_places);
         this.listViewPlaces.setOnItemClickListener(this);
@@ -62,7 +63,6 @@ public class PeopleActivity extends AppCompatActivity implements AdapterView.OnI
         intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, clickedPlace);
         startActivity(intent);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
