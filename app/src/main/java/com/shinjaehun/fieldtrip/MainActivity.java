@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //로그인 관련 처리가 필요함....startActivityResult로...
-//        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
 
         ImageView peopleIV = (ImageView)findViewById(R.id.image_people);
         peopleIV.setOnClickListener(new Button.OnClickListener(){
