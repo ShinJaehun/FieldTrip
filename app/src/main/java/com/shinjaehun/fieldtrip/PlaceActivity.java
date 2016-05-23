@@ -62,7 +62,7 @@ public class PlaceActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:33.5140015,126.5467813");
+                Uri gmmIntentUri = Uri.parse("geo:33.5140015,126.5467813?q=국립제주박물관");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
