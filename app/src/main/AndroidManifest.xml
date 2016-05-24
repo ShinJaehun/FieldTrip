@@ -29,11 +29,7 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".SignupActivity" android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".PeopleActivity" android:theme="@style/AppTheme.Dark"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".HistoryActivity" android:theme="@style/AppTheme.Dark"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".NatureActivity" android:theme="@style/AppTheme.Dark"
+        <activity android:name=".CategoryActivity" android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".PlaceActivity" android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait"></activity>

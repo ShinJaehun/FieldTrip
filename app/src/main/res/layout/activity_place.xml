@@ -56,22 +56,29 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp"
-            android:background="#eeedef">
+            android:background="@drawable/item_selector_background">
 
             <TextView
                 android:id="@+id/detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:lineSpacingExtra="7dp"/>
 
             <ImageView
                 android:id="@+id/map"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:scaleType="fitCenter" />
+                android:layout_height="220dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop" />
 
+            <TextView
+android:text="안녕하세요"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="7dp"/>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

@@ -21,15 +21,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //로그인 관련 처리가 필요함....startActivityResult로...
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//        startActivity(intent);
+
+//        ImageView peopleIV = (ImageView)findViewById(R.id.image_people);
+//        peopleIV.setOnClickListener(new Button.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         ImageView peopleIV = (ImageView)findViewById(R.id.image_people);
         peopleIV.setOnClickListener(new Button.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                intent.putExtra(CategoryActivity.EXTRA_SELECTED_CATEGORY, "people");
                 startActivity(intent);
             }
         });
@@ -39,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                intent.putExtra(CategoryActivity.EXTRA_SELECTED_CATEGORY, "history");
                 startActivity(intent);
             }
         });
@@ -49,10 +61,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NatureActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                intent.putExtra(CategoryActivity.EXTRA_SELECTED_CATEGORY, "nature");
                 startActivity(intent);
             }
         });
+
+
+//        ImageView historyIV = (ImageView)findViewById(R.id.image_history);
+//        historyIV.setOnClickListener(new Button.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        ImageView natureIV = (ImageView)findViewById(R.id.image_nature);
+//        natureIV.setOnClickListener(new Button.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), NatureActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

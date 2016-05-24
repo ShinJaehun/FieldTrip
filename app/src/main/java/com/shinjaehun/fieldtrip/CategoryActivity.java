@@ -9,31 +9,39 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.List;
 
 /**
- * Created by shinjaehun on 2016-05-23.
+ * Created by shinjaehun on 2016-05-20.
  */
-public class NatureActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    public static final String TAG = "NatureActivity";
+public class CategoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    public static final String EXTRA_SELECTED_CATEGORY = "extra_key_selected_category";
+
+    public static final String TAG = "HistoryActivity";
 
     private ListView listViewPlaces;
     private ListPlacesAdapter adapter;
     private List<Place> listPlaces;
     private PlaceDAO placeDAO;
+    private String category;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nature);
+        setContentView(R.layout.activity_category);
+
+        Intent intent = getIntent();
+        category = intent.getExtras().getString(EXTRA_SELECTED_CATEGORY);
 
         initLayout();
 
         placeDAO = new PlaceDAO(this);
 
-        listPlaces = placeDAO.getPlacesByType("nature");
+        listPlaces = placeDAO.getPlacesByType(category);
 
         adapter = new ListPlacesAdapter(this, listPlaces);
 
@@ -49,7 +57,24 @@ public class NatureActivity extends AppCompatActivity implements AdapterView.OnI
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        ctl.setTitle("자연환경");
+        ImageView img = (ImageView)findViewById(R.id.image);
+
+        switch (category) {
+            case "people":
+                ctl.setTitle("사람들");
+                img.setImageResource(R.drawable.people_bg);
+                break;
+            case "history":
+                ctl.setTitle("역사");
+                img.setImageResource(R.drawable.history_bg);
+                break;
+            case "nature":
+                ctl.setTitle("자연환경");
+                img.setImageResource(R.drawable.nature_bg);
+                break;
+            default:
+                break;
+        }
 
         this.listViewPlaces = (ListView)findViewById(R.id.list_places);
         this.listViewPlaces.setOnItemClickListener(this);
@@ -63,6 +88,7 @@ public class NatureActivity extends AppCompatActivity implements AdapterView.OnI
         intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, clickedPlace);
         startActivity(intent);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
