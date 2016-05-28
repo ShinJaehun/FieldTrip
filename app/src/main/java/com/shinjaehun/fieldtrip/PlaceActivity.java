@@ -1,11 +1,15 @@
 package com.shinjaehun.fieldtrip;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.CollapsibleActionView;
 import android.support.v7.widget.Toolbar;
@@ -19,20 +23,28 @@ import android.widget.TextView;
  */
 public class PlaceActivity extends AppCompatActivity {
     public static final String EXTRA_SELECTED_PLACE = "extra_key_selected_place";
+    private Place place;
+
+//    private FragmentManager fm;
+//    private FragmentTransaction ft;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
+
+
         Intent intent = getIntent();
-        Place place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
+        place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
+
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         ctl.setTitle(place.getName());
+
 
         ImageView img = (ImageView)findViewById(R.id.pic);
         switch (place.getPic()) {
@@ -44,31 +56,37 @@ public class PlaceActivity extends AppCompatActivity {
                 break;
         }
 
-        TextView detail = (TextView)findViewById(R.id.detail);
-        detail.setText(place.getDetail());
+
+//        fm = getFragmentManager();
+//        ft = fm.beginTransaction();
+
+        InformationFragment informationFragment = InformationFragment.newInstance(place);
+        openFragment(informationFragment);
+//        ft.add(R.id.fragment_container, informationFragment);
 
 
-        ImageView map = (ImageView)findViewById(R.id.map);
-        switch (place.getPic()) {
-            case "jejumuseum":
-                map.setImageResource(R.drawable.map_jejumuseum);
-                break;
-            default:
-                map.setImageResource(R.drawable.noimage);
-                break;
-        }
-
-        map.setOnClickListener(new Button.OnClickListener() {
+        FloatingActionButton userInput = (FloatingActionButton)findViewById(R.id.user_input);
+        userInput.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:33.5140015,126.5467813?q=국립제주박물관");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+//                Intent intent = new Intent(this, UserInputActivity.class);
+//                intent.putExtra(EXTRA_SELECTED_PLACE, place);
+//                startActivity(intent);
+                InputFragment inputFragment = new InputFragment();
+                openFragment(inputFragment);
+//                ft.replace(R.id.fragment_container, inputFragment);
+
+
             }
         });
 
+    }
 
+    private void openFragment(final Fragment fragment) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
     }
 }

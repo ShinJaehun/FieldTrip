@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/img_icon"
         android:layout_width="0dp"
@@ -12,7 +13,18 @@
         android:scaleType="centerCrop"
         android:layout_marginLeft="12dp"/>
 
-
+    <!--
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/img_icon"
+        android:layout_width="0dp"
+        android:layout_height="96dp"
+        android:layout_weight="3"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="12dp"
+        app:civ_border_color="#00000000"
+        app:civ_border_width="1dp"/>
+    -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -26,13 +38,12 @@
             android:layout_height="0dp"
             android:layout_weight="3"
             android:text="장소"
-            android:textColor="@color/white"
+            android:textColor="#cccccc"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            />
+            android:layout_gravity="center_vertical" />
 
         <TextView
             android:id="@+id/text_desc"
@@ -44,7 +55,6 @@
             android:layout_marginBottom="6dp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"/>
-
 
     </LinearLayout>
 
