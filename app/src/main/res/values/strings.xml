@@ -22,4 +22,6 @@
         consectetur adipiscing elit. Morbi sed risus tincidunt, accumsan elit in, porta dolor.
         Maecenas fermentum pulvinar nisi vehicula interdum.
     </string>
+    <string name="hint1">메일 주소</string>
+    <string name="hint2">다녀와서 느낀 점 쓰기</string>
 </resources>

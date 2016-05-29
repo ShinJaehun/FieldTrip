@@ -33,11 +33,8 @@ public class PlaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
-
-
         Intent intent = getIntent();
         place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
-
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +70,7 @@ public class PlaceActivity extends AppCompatActivity {
 //                Intent intent = new Intent(this, UserInputActivity.class);
 //                intent.putExtra(EXTRA_SELECTED_PLACE, place);
 //                startActivity(intent);
-                InputFragment inputFragment = new InputFragment();
+                InputFragment inputFragment = InputFragment.newInstance(place);
                 openFragment(inputFragment);
 //                ft.replace(R.id.fragment_container, inputFragment);
 
