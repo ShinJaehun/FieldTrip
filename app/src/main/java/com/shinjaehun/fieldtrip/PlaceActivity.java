@@ -35,52 +35,57 @@ public class PlaceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
+        //CategoryActivity에서 호출할 때 넘긴 place 받아오기
 
+        //CollaspingToolbarLayout을 위한 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout ctl = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         ctl.setTitle(place.getName());
 
-
         ImageView img = (ImageView)findViewById(R.id.pic);
-        switch (place.getPic()) {
-            case "jejumuseum":
-                img.setImageResource(R.drawable.jejumuseum_big);
-                break;
-            default:
-                img.setImageResource(R.drawable.noimage);
-                break;
+        int resourceId = getApplicationContext().getResources().getIdentifier(place.getPic() + "_title", "drawable", getApplicationContext().getPackageName());
+        //웃기긴 한데 이런식으로 파일명을 찾는 것도 가능하긴 하구만...
+        //어쨌든 나중에 통일할 필요가 있다.
+        if (resourceId != 0) {
+            img.setImageResource(resourceId);
+        } else {
+            img.setImageResource(R.drawable.noimage);
+            //resource 찾을 수 없으면 no image 표시하기
         }
 
+//이런 식으로는 DB에 저장된 자료가 기하급수적으로 늘어났을 때 처리하기 곤란할 수 밖에 없다.
+//        switch (place.getPic()) {
+//            case "jejumuseum_icon":
+//                img.setImageResource(R.drawable.jejumuseum_title);
+//                break;
+//            default:
+//                img.setImageResource(R.drawable.noimage);
+//                break;
+//        }
 
-//        fm = getFragmentManager();
-//        ft = fm.beginTransaction();
 
         InformationFragment informationFragment = InformationFragment.newInstance(place);
+        //기본적으로 InformationFragment가 표시됨
         openFragment(informationFragment);
-//        ft.add(R.id.fragment_container, informationFragment);
-
 
         FloatingActionButton userInput = (FloatingActionButton)findViewById(R.id.user_input);
         userInput.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(this, UserInputActivity.class);
-//                intent.putExtra(EXTRA_SELECTED_PLACE, place);
-//                startActivity(intent);
                 InputFragment inputFragment = InputFragment.newInstance(place);
                 openFragment(inputFragment);
-//                ft.replace(R.id.fragment_container, inputFragment);
-
-
+                //버튼을 클릭하면 InputFragment로 교체
             }
         });
 
     }
 
     private void openFragment(final Fragment fragment) {
+        //Fragment 교체를 위해 FragmentTransaction을 시작하는 부분을 openFragment()로 넘김
+
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.fragment_container, fragment);

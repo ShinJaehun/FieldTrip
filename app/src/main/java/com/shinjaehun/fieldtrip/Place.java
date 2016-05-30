@@ -11,7 +11,6 @@ public class Place implements Serializable {
     private String type;
     private String name;
     private String pic;
-    private String map;
     private String location;
     private String description;
     private String detail;
@@ -27,7 +26,6 @@ public class Place implements Serializable {
         this.type = type;
         this.name = name;
         this.pic = pic;
-        this.map = map;
         this.location = location;
         this.description = description;
     }
@@ -62,14 +60,6 @@ public class Place implements Serializable {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
     }
 
     public String getLocation() {

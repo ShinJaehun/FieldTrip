@@ -67,27 +67,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        ImageView historyIV = (ImageView)findViewById(R.id.image_history);
-//        historyIV.setOnClickListener(new Button.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        ImageView natureIV = (ImageView)findViewById(R.id.image_nature);
-//        natureIV.setOnClickListener(new Button.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), NatureActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 
 }
