@@ -117,10 +117,10 @@ public class InputFragment extends Fragment {
     };
 
     private void submit() {
-        if (!validate()) {
-            onSubmitFailed();
-            return;
-        }
+//        if (!validate()) {
+//            onSubmitFailed();
+//            return;
+//        }
 
         //InputFragment에서 입력한 내용을 명시적 Intent를 활용하여 메일 클라이언트로 전달하기
         String opinion = opinionET.getText().toString();
@@ -132,41 +132,41 @@ public class InputFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void onSubmitFailed() {
-        Toast.makeText(getActivity(), "메일 보내기에 실패했습니다", Toast.LENGTH_SHORT).show();
-    }
+//    private void onSubmitFailed() {
+//        Toast.makeText(getActivity(), "메일 보내기에 실패했습니다", Toast.LENGTH_SHORT).show();
+//    }
 
-    private boolean validate() {
-        //dateET에 입력한 형식이 날짜 형식이 맞는지 검증
-        boolean valid = true;
-
-//        sendEmail = sendEmailET.getText().toString();
+//    private boolean validate() {
+//        //dateET에 입력한 형식이 날짜 형식이 맞는지 검증
+//        boolean valid = true;
 //
-//        if (sendEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(sendEmail).matches()) {
-//            sendEmailET.setError("메일 형식에 맞게 입력하세요");
+////        sendEmail = sendEmailET.getText().toString();
+////
+////        if (sendEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(sendEmail).matches()) {
+////            sendEmailET.setError("메일 형식에 맞게 입력하세요");
+////            valid = false;
+////        } else {
+////            sendEmailET.setError(null);
+////        }
+//        String msg = null;
+//
+//        date = dateET.getText().toString();
+//        if (date == null) {
+//            msg = "날짜 형식에 맞게 입력하세요";
 //            valid = false;
-//        } else {
-//            sendEmailET.setError(null);
 //        }
-        String msg = null;
-
-        date = dateET.getText().toString();
-        if (date == null) {
-            msg = "날짜 형식에 맞게 입력하세요";
-            valid = false;
-        }
-//        else {
-//            String cleanDate = date.replaceAll("[^\\d.]", "");
-//            if (!isNumber(cleanDate)) {
-//                msg = "숫자형식이 아닙니다";
-//                valid = false;
-//            }
-//        }
-
-         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-
-         return valid;
-    }
+////        else {
+////            String cleanDate = date.replaceAll("[^\\d.]", "");
+////            if (!isNumber(cleanDate)) {
+////                msg = "숫자형식이 아닙니다";
+////                valid = false;
+////            }
+////        }
+//
+//         Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+//
+//         return valid;
+//    }
 
 //    private static boolean isNumber(String str) {
 //        boolean result = false;
