@@ -113,7 +113,7 @@ public class PlaceDAO {
 
     public Place getPlaceById(long id) {
         Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
-                DBHelper.COLUMN_PLACE_ID + " = ",
+                DBHelper.COLUMN_PLACE_ID + " = ?",
                 new String[] { String.valueOf(id) }, null, null, null);
         //이렇게 직접 query 가능, ID에 해당하는 cursor 리턴하기
         if (cursor != null) {
