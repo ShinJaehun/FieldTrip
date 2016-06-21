@@ -17,31 +17,31 @@ public class PlaceDAO {
 
     public static final String TAG = "PlaceDAO";
 
-
     private SQLiteDatabase database;
     private DBHelper dbHelper;
-    private Context context;
     private String[] allColumns = { DBHelper.COLUMN_PLACE_ID, DBHelper.COLUMN_PLACE_TYPE,
             DBHelper.COLUMN_PLACE_NAME, DBHelper.COLUMN_PLACE_PIC, DBHelper.COLUMN_PLACE_LOCATION,
             DBHelper.COLUMN_PLACE_DESCRIPTION, DBHelper.COLUMN_PLACE_DETAIL };
 
     public PlaceDAO(Context c) {
-        this.context = c;
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(c);
+        database = dbHelper.getDb();
+//        this.context = c;
+//        dbHelper = new DBHelper(context);
         //DBHelper 생성
 
-        try {
-            open();
-            //DBHelper를 통해 쓰기 가능한 database 객체 불러오기
-        } catch (SQLException e) {
-            Log.e(TAG, "SQLException on openning database " + e.getMessage());
-            e.printStackTrace();
-        }
+//        try {
+//            open();
+//            //DBHelper를 통해 쓰기 가능한 database 객체 불러오기
+//        } catch (SQLException e) {
+//            Log.e(TAG, "SQLException on openning database " + e.getMessage());
+//            e.printStackTrace();
+//        }
     }
 
-    public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
-    }
+//    public void open() throws SQLException {
+//        database = dbHelper.getWritableDatabase();
+//    }
 
     public void close() {
         dbHelper.close();

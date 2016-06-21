@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by shinjaehun on 2016-05-21.
  */
-public class Place implements Serializable {
+public class Place {
 
     private long id;
     private String type;

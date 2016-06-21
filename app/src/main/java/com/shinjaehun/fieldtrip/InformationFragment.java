@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class InformationFragment extends Fragment {
     private static final String DESCRIBABLE_KEY = "describable_key";
 
-    public static InformationFragment newInstance(Place place) {
+    public static InformationFragment newInstance(long placeId) {
         //이건 effective java에 나오는 기술인데
         //생성자 대신 static factory 메소드 사용하기
         //'자신의 클래스 인스턴스만 반환하는 생성자와 달리 static factory 메소드는 자신이 반환하는 타입의
@@ -28,8 +28,10 @@ public class InformationFragment extends Fragment {
 
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
-        args.putSerializable(DESCRIBABLE_KEY, place);
+//        args.putSerializable(DESCRIBABLE_KEY, place);
+        args.putLong(DESCRIBABLE_KEY, placeId);
         fragment.setArguments(args);
+
         //이렇게 하여 PlaceActivity에서 다루고 있는 place 객체를 Fragment로 넘길 수 있다.
         return fragment;
     }
@@ -38,7 +40,10 @@ public class InformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_information, container, false);
-        Place place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+//        Place place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+        Long id = getArguments().getLong(DESCRIBABLE_KEY);
+        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+        Place place = placeDAO.getPlaceById(id);
         //위 생성자를 통해 넘어온 place를 받아온다
 
         TextView detail = (TextView)v.findViewById(R.id.detail);

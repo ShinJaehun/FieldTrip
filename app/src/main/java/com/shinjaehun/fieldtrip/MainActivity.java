@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+
         ImageView peopleIV = (ImageView)findViewById(R.id.image_people);
         peopleIV.setOnClickListener(new Button.OnClickListener(){
 

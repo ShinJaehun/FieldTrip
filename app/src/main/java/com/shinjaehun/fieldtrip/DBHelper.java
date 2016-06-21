@@ -1,13 +1,17 @@
 package com.shinjaehun.fieldtrip;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by shinjaehun on 2016-05-21.
  */
 public class DBHelper extends SQLiteOpenHelper{
+
+    private static final String TAG = DBHelper.class.getSimpleName();
 
     public static final String TABLE_PLACES = "places";
     public static final String COLUMN_PLACE_ID = "_id";
@@ -31,13 +35,51 @@ public class DBHelper extends SQLiteOpenHelper{
             + COLUMN_PLACE_DETAIL + " TEXT NOT NULL"
             + ");";
 
-    public DBHelper(Context context) {
+    private static DBHelper instance;
+    private static SQLiteDatabase db;
+
+    private DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        Log.i(TAG, "Create or Open database : " + DATABASE_NAME);
+    }
+
+    private DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        //이 생성자는 사용되지 않는 듯하다...
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+//    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+//        //이 생성자는 사용되지 않는 듯하다...
+//        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+//    }
+
+    private static void initialize(Context context) {
+        if (instance == null) {
+            instance = new DBHelper(context);
+            try {
+                Log.i(TAG, "Create or Open database : " + DATABASE_NAME);
+                db = instance.getWritableDatabase();
+            } catch (SQLException se) {
+                Log.e(TAG, "Couldn't create or open the database " + DATABASE_NAME);
+            }
+            Log.i(TAG, "instance of database " + DATABASE_NAME + " created!");
+        }
+    }
+
+    public static final DBHelper getInstance(Context context) {
+        initialize(context);
+        return instance;
+    }
+
+    public static final SQLiteDatabase getDb() {
+        return db;
+    }
+
+    public void close() {
+        if (instance != null) {
+            Log.i(TAG, "Closing the database " + DATABASE_NAME);
+            db.close();
+            instance = null;
+        }
     }
 
     @Override

@@ -23,7 +23,9 @@ import android.widget.TextView;
  */
 public class PlaceActivity extends AppCompatActivity {
     public static final String EXTRA_SELECTED_PLACE = "extra_key_selected_place";
+    private PlaceDAO placeDAO;
     private Place place;
+    long placeId;
 
 //    private FragmentManager fm;
 //    private FragmentTransaction ft;
@@ -34,8 +36,16 @@ public class PlaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place);
 
         Intent intent = getIntent();
-        place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
+//        place = (Place)intent.getExtras().getSerializable(EXTRA_SELECTED_PLACE);
         //CategoryActivity에서 호출할 때 넘긴 place 받아오기
+
+        long id = 0;
+        placeId = intent.getLongExtra(EXTRA_SELECTED_PLACE, id);
+//        placeDAO = getApplication().
+//         SukSuk app = (SukSuk)getApplication();
+//        placeDAO = app.getDao();
+        placeDAO = new PlaceDAO(this);
+        place = placeDAO.getPlaceById(placeId);
 
         //CollaspingToolbarLayout을 위한 설정
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -66,7 +76,7 @@ public class PlaceActivity extends AppCompatActivity {
 //        }
 
 
-        InformationFragment informationFragment = InformationFragment.newInstance(place);
+        InformationFragment informationFragment = InformationFragment.newInstance(placeId);
         //기본적으로 InformationFragment가 표시됨
         openFragment(informationFragment);
 
@@ -75,7 +85,7 @@ public class PlaceActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                InputFragment inputFragment = InputFragment.newInstance(place);
+                InputFragment inputFragment = InputFragment.newInstance(placeId);
                 openFragment(inputFragment);
                 //버튼을 클릭하면 InputFragment로 교체
             }
