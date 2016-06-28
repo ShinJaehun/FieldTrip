@@ -2,6 +2,8 @@ package com.shinjaehun.fieldtrip;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,8 +21,11 @@ import android.widget.TextView;
  */
 public class InformationFragment extends Fragment {
     private static final String DESCRIBABLE_KEY = "describable_key";
+    Place place;
 
-    public static InformationFragment newInstance(long placeId) {
+//    Long id;
+
+    public static InformationFragment newInstance(Place place) {
         //이건 effective java에 나오는 기술인데
         //생성자 대신 static factory 메소드 사용하기
         //'자신의 클래스 인스턴스만 반환하는 생성자와 달리 static factory 메소드는 자신이 반환하는 타입의
@@ -28,8 +33,8 @@ public class InformationFragment extends Fragment {
 
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
-//        args.putSerializable(DESCRIBABLE_KEY, place);
-        args.putLong(DESCRIBABLE_KEY, placeId);
+        args.putSerializable(DESCRIBABLE_KEY, place);
+//        args.putLong(DESCRIBABLE_KEY, placeId);
         fragment.setArguments(args);
 
         //이렇게 하여 PlaceActivity에서 다루고 있는 place 객체를 Fragment로 넘길 수 있다.
@@ -40,10 +45,10 @@ public class InformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_information, container, false);
-//        Place place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
-        Long id = getArguments().getLong(DESCRIBABLE_KEY);
-        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
-        Place place = placeDAO.getPlaceById(id);
+        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+//        id = getArguments().getLong(DESCRIBABLE_KEY);
+//        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+//        Place place = placeDAO.getPlaceById(id);
         //위 생성자를 통해 넘어온 place를 받아온다
 
         TextView detail = (TextView)v.findViewById(R.id.detail);
@@ -85,6 +90,29 @@ public class InformationFragment extends Fragment {
             }
         });
 
+//        FloatingActionButton userInput = (FloatingActionButton)findViewById(R.id.user_input);
+        Button userInput = (Button)v.findViewById(R.id.btn_usr_input);
+//        ImageButton userInput = (ImageButton)findViewById(R.id.user_input);
+        userInput.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                InputFragment inputFragment = InputFragment.newInstance(place);
+                openFragment(inputFragment);
+                //버튼을 클릭하면 InputFragment로 교체
+            }
+        });
+
         return v;
+    }
+
+
+    private void openFragment(final Fragment fragment) {
+        //Fragment 교체를 위해 FragmentTransaction을 시작하는 부분을 openFragment()로 넘김
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
     }
 }

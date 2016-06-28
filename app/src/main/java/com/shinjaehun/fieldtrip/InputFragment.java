@@ -44,12 +44,12 @@ public class InputFragment extends Fragment {
 
     private static final String DESCRIBABLE_KEY = "describable_key";
 
-    public static InputFragment newInstance(long placeId) {
+    public static InputFragment newInstance(Place place) {
         //Activity에서 Fragment로 object를 넘기기 위해 static factory 매소드를 이용함
         InputFragment fragment = new InputFragment();
         Bundle args = new Bundle();
-//        args.putSerializable(DESCRIBABLE_KEY, place);
-        args.putLong(DESCRIBABLE_KEY, placeId);
+        args.putSerializable(DESCRIBABLE_KEY, place);
+//        args.putLong(DESCRIBABLE_KEY, placeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,12 +58,12 @@ public class InputFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_input, container, false);
-//        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
         //place 받아오기
 
-        Long id = getArguments().getLong(DESCRIBABLE_KEY);
-        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
-        Place place = placeDAO.getPlaceById(id);
+//        Long id = getArguments().getLong(DESCRIBABLE_KEY);
+//        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+//        Place place = placeDAO.getPlaceById(id);
 
         ratingRB = (RatingBar)v.findViewById(R.id.rating);
         opinionET = (EditText)v.findViewById(R.id.opinion);
