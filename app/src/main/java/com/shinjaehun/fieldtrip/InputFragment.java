@@ -33,6 +33,7 @@ public class InputFragment extends Fragment {
     private RatingBar ratingRB;
     //아직까지 ratingRB를 이용해서 처리할 내용을 정하지 못함.
     private EditText opinionET;
+    private Button sendMailBT;
     private Button submitBT;
     private EditText dateET;
     private ImageView datePickerIV;
@@ -40,7 +41,8 @@ public class InputFragment extends Fragment {
     private int year, month, day;
     private String date;
     private Place place;
-
+    private String userInput;
+    PlaceDAO placeDAO;
 
     private static final String DESCRIBABLE_KEY = "describable_key";
 
@@ -62,11 +64,12 @@ public class InputFragment extends Fragment {
         //place 받아오기
 
 //        Long id = getArguments().getLong(DESCRIBABLE_KEY);
-//        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+        placeDAO = new PlaceDAO(this.getActivity());
 //        Place place = placeDAO.getPlaceById(id);
 
         ratingRB = (RatingBar)v.findViewById(R.id.rating);
         opinionET = (EditText)v.findViewById(R.id.opinion);
+        sendMailBT = (Button)v.findViewById(R.id.btn_send_mail);
         submitBT = (Button)v.findViewById(R.id.btn_submit);
         dateET = (EditText)v.findViewById(R.id.date_info);
         datePickerIV = (ImageView)v.findViewById(R.id.date_picker);
@@ -93,11 +96,11 @@ public class InputFragment extends Fragment {
         });
         //달력 아이콘 클릭하면 DatePickerDialog가 실행됨
 
-        submitBT.setOnClickListener(new View.OnClickListener(){
+        sendMailBT.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                submit();
+                sendMail();
             }
         });
 
@@ -106,6 +109,15 @@ public class InputFragment extends Fragment {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 score = (String.valueOf(rating));
                 //점수를 받아오는 것 까지는 했는데 아직 뭘 해야할지 결정하지 못함.
+            }
+        });
+
+        submitBT.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                userInput = opinionET.getText().toString();
+                placeDAO.updatePlace(place, 1, date, score, userInput);
             }
         });
 
@@ -120,7 +132,7 @@ public class InputFragment extends Fragment {
         }
     };
 
-    private void submit() {
+    private void sendMail() {
 //        if (!validate()) {
 //            onSubmitFailed();
 //            return;

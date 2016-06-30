@@ -22,6 +22,11 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String COLUMN_PLACE_DESCRIPTION = "description";
     public static final String COLUMN_PLACE_DETAIL = "detail";
 
+    public static final String COLUMN_PLACE_VISITED = "visited";
+    public static final String COLUMN_PLACE_THE_DATE = "the_date";
+    public static final String COLUMN_PLACE_SCORE = "score";
+    public static final String COLUMN_PLACE_USER_INPUT = "user_input";
+
     private static final String DATABASE_NAME = "places.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -32,7 +37,11 @@ public class DBHelper extends SQLiteOpenHelper{
             + COLUMN_PLACE_PIC + " TEXT NOT NULL, "
             + COLUMN_PLACE_LOCATION + " TEXT NOT NULL, "
             + COLUMN_PLACE_DESCRIPTION + " TEXT NOT NULL, "
-            + COLUMN_PLACE_DETAIL + " TEXT NOT NULL"
+            + COLUMN_PLACE_DETAIL + " TEXT NOT NULL, "
+            + COLUMN_PLACE_VISITED + " INTEGER DEFAULT 0, "
+            + COLUMN_PLACE_THE_DATE + " TEXT DEFAULT NULL, "
+            + COLUMN_PLACE_SCORE + " TEXT DEFAULT NULL, "
+            + COLUMN_PLACE_USER_INPUT + " TEXT DEFAULT NULL"
             + ");";
 
     private static DBHelper instance;
@@ -90,9 +99,9 @@ public class DBHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO " + TABLE_PLACES + " VALUES ('1', 'history', '국립제주박물관', 'jejumuseum', 'geo:33.5140015,126.5467813?q=국립제주박물관', '국립제주박물관입니다.'," +
                 " '국립제주박물관은 제주의 역사와 문화유산을 전시· 보존· 연구하는 고고·역사 박물관입니다. 제주의 여러 유적에서 출토된 유물과 역사적 문물들을 중심으로 선사시대부터 조선시대까지 각 유적과 유물이 갖는 역사·문화적 의의를 담은 전시품을 소개하고 있습니다.\n" +
                 "\n" +
-                "6개의 전시실로 이루어진 상설전시실에서는 제주 고유의 문화를 체계적으로 선보이고 있으며, 기획전시실에서는 해마다 다양한 주제의 특별전을 개최하고 있습니다.');");
-        db.execSQL("INSERT INTO " + TABLE_PLACES + " VALUES ('2', 'people', '신재훈님네집', 'jehunshin', 'lat2, long2', '신재훈님네 집입니다.', '신재훈님께서 살고 계신 집이다.');");
-        db.execSQL("INSERT INTO " + TABLE_PLACES + " VALUES ('3', 'history', '삼양동선사유적지', 'samyangprehistoric', 'lat3, long3', '삼양동 선사시대 유적지입니다.', '선사시대 사람들이 살던 유적지입니다.');");
+                "6개의 전시실로 이루어진 상설전시실에서는 제주 고유의 문화를 체계적으로 선보이고 있으며, 기획전시실에서는 해마다 다양한 주제의 특별전을 개최하고 있습니다.', 0, null, null, null);");
+        db.execSQL("INSERT INTO " + TABLE_PLACES + " VALUES ('2', 'people', '신재훈님네집', 'jehunshin', 'lat2, long2', '신재훈님네 집입니다.', '신재훈님께서 살고 계신 집이다.', 0, null, null, null);");
+        db.execSQL("INSERT INTO " + TABLE_PLACES + " VALUES ('3', 'history', '삼양동선사유적지', 'samyangprehistoric', 'lat3, long3', '삼양동 선사시대 유적지입니다.', '선사시대 사람들이 살던 유적지입니다.', 0, null, null, null);");
         //테이블 초기화
     }
 

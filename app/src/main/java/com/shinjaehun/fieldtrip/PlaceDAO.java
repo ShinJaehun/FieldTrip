@@ -21,7 +21,9 @@ public class PlaceDAO {
     private DBHelper dbHelper;
     private String[] allColumns = { DBHelper.COLUMN_PLACE_ID, DBHelper.COLUMN_PLACE_TYPE,
             DBHelper.COLUMN_PLACE_NAME, DBHelper.COLUMN_PLACE_PIC, DBHelper.COLUMN_PLACE_LOCATION,
-            DBHelper.COLUMN_PLACE_DESCRIPTION, DBHelper.COLUMN_PLACE_DETAIL };
+            DBHelper.COLUMN_PLACE_DESCRIPTION, DBHelper.COLUMN_PLACE_DETAIL,
+            DBHelper.COLUMN_PLACE_VISITED, DBHelper.COLUMN_PLACE_THE_DATE,
+            DBHelper.COLUMN_PLACE_SCORE, DBHelper.COLUMN_PLACE_USER_INPUT };
 
     public PlaceDAO(Context c) {
         dbHelper = DBHelper.getInstance(c);
@@ -56,6 +58,8 @@ public class PlaceDAO {
         values.put(DBHelper.COLUMN_PLACE_DESCRIPTION, description);
         values.put(DBHelper.COLUMN_PLACE_DETAIL, detail);
 
+        /* 사용자 입력 정보는 어떻게 처리할 것인가? :: 아직 구현 안 함. */
+
         long insertId = database.insert(DBHelper.TABLE_PLACES, null, values);
         Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
                 DBHelper.COLUMN_PLACE_ID + " = " + insertId, null, null, null, null);
@@ -63,6 +67,29 @@ public class PlaceDAO {
         Place newPlace = cursorToPlace(cursor);
         cursor.close();
         return newPlace;
+    }
+
+    public void updatePlace(Place place, int visited, String theDate, String score, String userInput) {
+//        Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
+//                DBHelper.COLUMN_PLACE_ID + " = ?",
+//                new String[] { String.valueOf(id) }, null, null, null);
+//        //이렇게 직접 query 가능, ID에 해당하는 cursor 리턴하기
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+//        }
+//        Place place = cursorToPlace(cursor);
+//        //cursor가 가리키는 place 리턴
+//        //cursor.close()로 종료해줘야 하는 것 아닌가?
+//
+
+        ContentValues newValues = new ContentValues();
+        newValues.put(DBHelper.COLUMN_PLACE_VISITED, visited);
+        newValues.put(DBHelper.COLUMN_PLACE_THE_DATE, theDate);
+        newValues.put(DBHelper.COLUMN_PLACE_SCORE, score);
+        newValues.put(DBHelper.COLUMN_PLACE_USER_INPUT, userInput);
+
+        long id = place.getId();
+        database.update(DBHelper.TABLE_PLACES, newValues, DBHelper.COLUMN_PLACE_ID + " = " + id, null);
     }
 
     public void deletePlace(Place place) {
@@ -136,6 +163,11 @@ public class PlaceDAO {
         place.setLocation(cursor.getString(4));
         place.setDescription(cursor.getString(5));
         place.setDetail(cursor.getString(6));
+
+        place.setVisited(cursor.getInt(7));
+        place.setTheDate(cursor.getString(8));
+        place.setScore(cursor.getString(9));
+        place.setUserInput(cursor.getString(10));
         return place;
     }
 

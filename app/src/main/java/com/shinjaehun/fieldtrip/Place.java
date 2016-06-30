@@ -16,6 +16,9 @@ public class Place implements Serializable {
     private String detail;
 
     //이게 여기 있어야 하나 아니면 User 테이블에 있어야 하나...
+    private int visited;
+    private String theDate;
+    private String score;
     private String userInput;
 
     public Place() {
@@ -86,5 +89,35 @@ public class Place implements Serializable {
         this.detail = detail;
     }
 
+    public int isVisited() {
+        return visited;
+    }
 
+    public void setVisited(int visited) {
+        this.visited = visited;
+    }
+
+    public String getTheDate() {
+        return theDate;
+    }
+
+    public void setTheDate(String theDate) {
+        this.theDate = theDate;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getUserInput() {
+        return userInput;
+    }
+
+    public void setUserInput(String userInput) {
+        this.userInput = userInput;
+    }
 }
