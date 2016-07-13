@@ -93,13 +93,18 @@ public class InformationFragment extends Fragment {
 //        FloatingActionButton userInput = (FloatingActionButton)findViewById(R.id.user_input);
         Button userInput = (Button)v.findViewById(R.id.btn_usr_input);
 //        ImageButton userInput = (ImageButton)findViewById(R.id.user_input);
+
         userInput.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                //만일 place.visited == 0이면...
                 InputFragment inputFragment = InputFragment.newInstance(place);
                 openFragment(inputFragment);
                 //버튼을 클릭하면 InputFragment로 교체
+
+                //place.visited == 1이면 showfragment로?
+
             }
         });
 
