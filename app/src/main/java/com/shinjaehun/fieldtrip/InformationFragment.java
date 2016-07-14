@@ -21,11 +21,14 @@ import android.widget.TextView;
  */
 public class InformationFragment extends Fragment {
     private static final String DESCRIBABLE_KEY = "describable_key";
-    Place place;
+//    Place place;
 
-//    Long id;
+//    long id;
 
-    public static InformationFragment newInstance(Place place) {
+//    public static InformationFragment newInstance(Place place) {
+
+    public static InformationFragment newInstance(long placeId) {
+
         //이건 effective java에 나오는 기술인데
         //생성자 대신 static factory 메소드 사용하기
         //'자신의 클래스 인스턴스만 반환하는 생성자와 달리 static factory 메소드는 자신이 반환하는 타입의
@@ -33,8 +36,8 @@ public class InformationFragment extends Fragment {
 
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
-        args.putSerializable(DESCRIBABLE_KEY, place);
-//        args.putLong(DESCRIBABLE_KEY, placeId);
+//        args.putSerializable(DESCRIBABLE_KEY, place);
+        args.putLong(DESCRIBABLE_KEY, placeId);
         fragment.setArguments(args);
 
         //이렇게 하여 PlaceActivity에서 다루고 있는 place 객체를 Fragment로 넘길 수 있다.
@@ -45,10 +48,10 @@ public class InformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_information, container, false);
-        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
-//        id = getArguments().getLong(DESCRIBABLE_KEY);
-//        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
-//        Place place = placeDAO.getPlaceById(id);
+//        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+        final long id = getArguments().getLong(DESCRIBABLE_KEY);
+        PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+        Place place = placeDAO.getPlaceById(id);
         //위 생성자를 통해 넘어온 place를 받아온다
 
         TextView detail = (TextView)v.findViewById(R.id.detail);
@@ -98,13 +101,10 @@ public class InformationFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //만일 place.visited == 0이면...
-                InputFragment inputFragment = InputFragment.newInstance(place);
+//                InputFragment inputFragment = InputFragment.newInstance(place);
+                InputFragment inputFragment = InputFragment.newInstance(id);
                 openFragment(inputFragment);
                 //버튼을 클릭하면 InputFragment로 교체
-
-                //place.visited == 1이면 showfragment로?
-
             }
         });
 

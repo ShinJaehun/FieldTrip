@@ -69,7 +69,7 @@ public class PlaceDAO {
         return newPlace;
     }
 
-    public void updatePlace(Place place, int visited, String theDate, String score, String userInput) {
+    public void updatePlace(long id, int visited, String theDate, String score, String userInput) {
 //        Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
 //                DBHelper.COLUMN_PLACE_ID + " = ?",
 //                new String[] { String.valueOf(id) }, null, null, null);
@@ -81,6 +81,10 @@ public class PlaceDAO {
 //        //cursor가 가리키는 place 리턴
 //        //cursor.close()로 종료해줘야 하는 것 아닌가?
 //
+        Log.v(TAG, "newValue visited : " + visited);
+        Log.v(TAG, "newValue theDate : " + theDate);
+        Log.v(TAG, "newValue score : " + score);
+        Log.v(TAG, "newValue userInput : " + userInput);
 
         ContentValues newValues = new ContentValues();
         newValues.put(DBHelper.COLUMN_PLACE_VISITED, visited);
@@ -88,7 +92,7 @@ public class PlaceDAO {
         newValues.put(DBHelper.COLUMN_PLACE_SCORE, score);
         newValues.put(DBHelper.COLUMN_PLACE_USER_INPUT, userInput);
 
-        long id = place.getId();
+//        long id = place.getId();
         database.update(DBHelper.TABLE_PLACES, newValues, DBHelper.COLUMN_PLACE_ID + " = " + id, null);
     }
 

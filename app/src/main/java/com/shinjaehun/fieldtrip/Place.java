@@ -5,7 +5,13 @@ import java.io.Serializable;
 /**
  * Created by shinjaehun on 2016-05-21.
  */
-public class Place implements Serializable {
+//public class Place implements Serializable {
+public class Place {
+    // DB 조회 수를 줄일 수 있고
+    // 직관적으로 이해할 수 있어 가독성이 높아
+    // Place를 그대로 Serializable 객체로 넘기려고 했으나
+    // DB를 업데이트하고 다시 Fragment에서 보여줄 때 입력한 정보가 갱신되지 않는 문제가 발생했다.
+    // 이에 다시 Place를 직접 넘기는 대신 place의 ID를 넘기는 방식으로 문제를 해결할 수 있었다.
 
     private long id;
     private String type;

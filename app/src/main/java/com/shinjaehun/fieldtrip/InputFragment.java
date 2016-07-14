@@ -1,13 +1,18 @@
 package com.shinjaehun.fieldtrip;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,21 +42,25 @@ public class InputFragment extends Fragment {
     private Button submitBT;
     private EditText dateET;
     private ImageView datePickerIV;
-    private String score;
-    private int year, month, day;
-    private String date;
-    private Place place;
-    private String userInput;
-    PlaceDAO placeDAO;
+//    private String score;
+//    private int year, month, day;
+//    private String date;
+//    private Place place;
+//    private String userInput;
+//    PlaceDAO placeDAO;
+//    String today;
+//    long id;
 
     private static final String DESCRIBABLE_KEY = "describable_key";
 
-    public static InputFragment newInstance(Place place) {
+//    public static InputFragment newInstance(Place place) {
+
+    public static InputFragment newInstance(long placeId) {
         //Activity에서 Fragment로 object를 넘기기 위해 static factory 매소드를 이용함
         InputFragment fragment = new InputFragment();
         Bundle args = new Bundle();
-        args.putSerializable(DESCRIBABLE_KEY, place);
-//        args.putLong(DESCRIBABLE_KEY, placeId);
+//        args.putSerializable(DESCRIBABLE_KEY, place);
+        args.putLong(DESCRIBABLE_KEY, placeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,12 +69,12 @@ public class InputFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_input, container, false);
-        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
+//        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
         //place 받아오기
 
-//        Long id = getArguments().getLong(DESCRIBABLE_KEY);
-        placeDAO = new PlaceDAO(this.getActivity());
-//        Place place = placeDAO.getPlaceById(id);
+        final long id = getArguments().getLong(DESCRIBABLE_KEY);
+        final PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
+        final Place place = placeDAO.getPlaceById(id);
 
         ratingRB = (RatingBar)v.findViewById(R.id.rating);
         opinionET = (EditText)v.findViewById(R.id.opinion);
@@ -75,17 +84,41 @@ public class InputFragment extends Fragment {
         datePickerIV = (ImageView)v.findViewById(R.id.date_picker);
 
         GregorianCalendar calendar = new GregorianCalendar();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day= calendar.get(Calendar.DAY_OF_MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
         //오늘날짜를 받아오기 위한 year, month, day 정보
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        date = sdf.format(new Date());
+        String today = sdf.format(new Date());
         //SimpleDateFormat을 이용하여 오늘 날짜를 String 타입의 date로 넘기기
 
-        dateET.setText(date);
-        //EditText에 오늘 날짜 박아 넣기
+        if (place.isVisited() == 0) {
+        //방문한 적이 없다면...
+
+            dateET.setText(today);
+            //EditText에 오늘 날짜 박아 넣기
+
+        } else {
+            //방문한 적이 있다면...
+
+            if (place.getTheDate() != null) {
+                dateET.setText(place.getTheDate());
+            } else {
+                dateET.setText(today);
+            }
+            if (place.getScore() != null) {
+                ratingRB.setRating(Float.parseFloat(place.getScore()));
+            } else {
+                ratingRB.setRating(0.0f);
+            }
+
+            if (place.getUserInput() != null) {
+                opinionET.setText(place.getUserInput());
+            } else {
+                opinionET.setText("");
+            }
+        }
 
         datePickerIV.setOnClickListener(new View.OnClickListener(){
 
@@ -100,29 +133,80 @@ public class InputFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                sendMail();
+                sendMail(place);
             }
         });
 
-        ratingRB.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                score = (String.valueOf(rating));
-                //점수를 받아오는 것 까지는 했는데 아직 뭘 해야할지 결정하지 못함.
-            }
-        });
+//        ratingRB.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+////                String s = (String.valueOf(rating));
+//                //점수를 받아오는 것 까지는 했는데 아직 뭘 해야할지 결정하지 못함.
+//            }
+//        });
 
         submitBT.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                userInput = opinionET.getText().toString();
-                placeDAO.updatePlace(place, 1, date, score, userInput);
+//                AlertDialog mDialog = createDialog();
+//                mDialog.show();
+                String date = dateET.getText().toString();
+                String score = String.valueOf(ratingRB.getRating());
+                String userInput = opinionET.getText().toString();
+                placeDAO.updatePlace(id, 1, date, score, userInput);
+                // DB 업데이트
+
+                getActivity().finish();
+                //activity를 종료해서 다시 categoryActivity로 돌아간다.
             }
         });
 
         return v;
     }
+
+//    private AlertDialog createDialog() {
+//        AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+//        ab.setMessage("저장하시겠습니까?");
+//        ab.setCancelable(true);
+//        ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                String date = dateET.getText().toString();
+//                String score = String.valueOf(ratingRB.getRating());
+//                String userInput = opinionET.getText().toString();
+//                placeDAO.updatePlace(id, 1, date, score, userInput);
+//
+//                getActivity().finish();
+////                changeFragment();
+//            }
+//
+//        });
+//
+//        ab.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        return ab.create();
+//
+//    }
+
+//    private void changeFragment() {
+//        InformationFragment informationFragment = InformationFragment.newInstance(id);
+//        //기본적으로 InformationFragment가 표시됨
+//        openFragment(informationFragment);
+//    }
+
+//    private void openFragment(final Fragment fragment) {
+//        //Fragment 교체를 위해 FragmentTransaction을 시작하는 부분을 openFragment()로 넘김
+//
+//        FragmentManager fm = getFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        ft.replace(R.id.fragment_container, fragment);
+//        ft.commit();
+//    }
 
     private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -132,7 +216,7 @@ public class InputFragment extends Fragment {
         }
     };
 
-    private void sendMail() {
+    private void sendMail(Place p) {
 //        if (!validate()) {
 //            onSubmitFailed();
 //            return;
@@ -142,8 +226,8 @@ public class InputFragment extends Fragment {
         String opinion = opinionET.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
 
-        intent.putExtra(Intent.EXTRA_SUBJECT, dateET.getText().toString() + " " + place.getName() + " 다녀와서");
-        intent.putExtra(Intent.EXTRA_TEXT, dateET.getText().toString() + " " + place.getName() + "에 다녀왔습니다.\n" + opinion);
+        intent.putExtra(Intent.EXTRA_SUBJECT, dateET.getText().toString() + " " + p.getName() + " 다녀와서");
+        intent.putExtra(Intent.EXTRA_TEXT, dateET.getText().toString() + " " + p.getName() + "에 다녀왔습니다.\n" + opinion);
         intent.setType("text/plain");
         startActivity(intent);
     }

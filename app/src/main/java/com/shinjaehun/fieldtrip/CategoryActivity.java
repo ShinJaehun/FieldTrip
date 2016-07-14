@@ -104,16 +104,15 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
         //이런 형태의 place 불러오기는 안된다. position은 dapter에서 현재 선택된 ID이며
         //getPlaceById의 인자로 넘기는 ID는 DB에 저장된 ID이기 때문이다...
 
-//        long placeId = clickedPlace.getId();
+        long placeId = clickedPlace.getId();
 
         Log.d(TAG, "clickedItem : " + clickedPlace.getName());
         //Debuging을 위한 TAG - 나중에 삭제할 것
 
         Intent intent = new Intent(this, PlaceActivity.class);
-//        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, placeId);
+        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, placeId);
 
-
-        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, clickedPlace);
+//        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, clickedPlace);
         startActivity(intent);
         //선택된 place를 넘겨서 PlaceActivity 시작
     }
