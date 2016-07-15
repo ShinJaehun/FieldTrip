@@ -26,6 +26,7 @@ public class Place {
     private String theDate;
     private String score;
     private String userInput;
+    private String userPhoto;
 
     public Place() {
 
@@ -34,6 +35,7 @@ public class Place {
     public Place(String type, String name, String pic, String map, String location, String description) {
         this.type = type;
         this.name = name;
+
         this.pic = pic;
         this.location = location;
         this.description = description;
@@ -125,5 +127,13 @@ public class Place {
 
     public void setUserInput(String userInput) {
         this.userInput = userInput;
+    }
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
     }
 }

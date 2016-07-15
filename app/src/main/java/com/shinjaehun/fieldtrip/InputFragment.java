@@ -1,5 +1,6 @@
 package com.shinjaehun.fieldtrip;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -7,10 +8,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Patterns;
@@ -24,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,13 +42,18 @@ import java.util.concurrent.Exchanger;
  */
 public class InputFragment extends Fragment {
 
+    public static final String TAG = "InputFragment";
+
     private RatingBar ratingRB;
-    //아직까지 ratingRB를 이용해서 처리할 내용을 정하지 못함.
     private EditText opinionET;
     private Button sendMailBT;
     private Button submitBT;
+    private Button getPhotoBT;
     private EditText dateET;
     private ImageView datePickerIV;
+    private ImageView photoIV;
+
+    private Uri selectedImage;
 //    private String score;
 //    private int year, month, day;
 //    private String date;
@@ -52,6 +64,7 @@ public class InputFragment extends Fragment {
 //    long id;
 
     private static final String DESCRIBABLE_KEY = "describable_key";
+    private static final int REQ_CODE_SELECT_IMAGE = 100;
 
 //    public static InputFragment newInstance(Place place) {
 
@@ -80,8 +93,10 @@ public class InputFragment extends Fragment {
         opinionET = (EditText)v.findViewById(R.id.opinion);
         sendMailBT = (Button)v.findViewById(R.id.btn_send_mail);
         submitBT = (Button)v.findViewById(R.id.btn_submit);
+        getPhotoBT = (Button)v.findViewById(R.id.btn_get_photo);
         dateET = (EditText)v.findViewById(R.id.date_info);
         datePickerIV = (ImageView)v.findViewById(R.id.date_picker);
+        photoIV = (ImageView)v.findViewById(R.id.photo);
 
         GregorianCalendar calendar = new GregorianCalendar();
         final int year = calendar.get(Calendar.YEAR);
@@ -95,7 +110,6 @@ public class InputFragment extends Fragment {
 
         if (place.isVisited() == 0) {
         //방문한 적이 없다면...
-
             dateET.setText(today);
             //EditText에 오늘 날짜 박아 넣기
 
@@ -118,6 +132,23 @@ public class InputFragment extends Fragment {
             } else {
                 opinionET.setText("");
             }
+
+            if (place.getUserPhoto() != null) {
+                try {
+                    InputStream imageStream = getActivity().getContentResolver().openInputStream(Uri.parse(place.getUserPhoto()));
+                    Bitmap image_bitmap = BitmapFactory.decodeStream(imageStream);
+                    //place에서 사진 경로가 저장되어 있는 String을 URI 형태로 변환하고
+
+                    photoIV.setImageBitmap(image_bitmap);
+                    photoIV.setVisibility(View.VISIBLE);
+                    //해당 비트맵을 photoIV에 표시
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                photoIV.setVisibility(View.GONE);
+            }
         }
 
         datePickerIV.setOnClickListener(new View.OnClickListener(){
@@ -128,6 +159,17 @@ public class InputFragment extends Fragment {
             }
         });
         //달력 아이콘 클릭하면 DatePickerDialog가 실행됨
+
+        getPhotoBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
+                //갤러리에서 이미지를 받아올 수 있도록 명시적 intent 실행
+            }
+        });
 
         sendMailBT.setOnClickListener(new View.OnClickListener(){
 
@@ -154,7 +196,12 @@ public class InputFragment extends Fragment {
                 String date = dateET.getText().toString();
                 String score = String.valueOf(ratingRB.getRating());
                 String userInput = opinionET.getText().toString();
-                placeDAO.updatePlace(id, 1, date, score, userInput);
+
+                if (selectedImage == null) {
+                    placeDAO.updatePlace(id, 1, date, score, userInput, null);
+                } else {
+                    placeDAO.updatePlace(id, 1, date, score, userInput, selectedImage.toString());
+                }
                 // DB 업데이트
 
                 getActivity().finish();
@@ -163,6 +210,36 @@ public class InputFragment extends Fragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //갤러리에서 받아온 이미지 이미지 뷰로 표시
+//        Toast.makeText(getBaseContext(), "resultCode : "+resultCode,Toast.LENGTH_SHORT).show();
+
+        if(requestCode == REQ_CODE_SELECT_IMAGE)
+        {
+            if(resultCode== Activity.RESULT_OK)
+            {
+                try {
+
+                    selectedImage = data.getData();
+                    Log.v(TAG, "Selected Image : " + selectedImage.toString());
+                    //Uri에서 이미지 이름을 얻어온다.
+
+                    InputStream imageStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                    Bitmap image_bitmap = BitmapFactory.decodeStream(imageStream);
+                    //이미지 데이터를 비트맵으로 받아온다.
+
+                    //배치해놓은 ImageView에 set
+                    photoIV.setImageBitmap(image_bitmap);
+                    photoIV.setVisibility(View.VISIBLE);
+                }
+                catch (FileNotFoundException e) { 		e.printStackTrace(); 			}
+                catch (IOException e)           {		e.printStackTrace(); 			}
+                catch (Exception e)		         {      e.printStackTrace();			}
+            }
+        }
     }
 
 //    private AlertDialog createDialog() {
@@ -228,7 +305,28 @@ public class InputFragment extends Fragment {
 
         intent.putExtra(Intent.EXTRA_SUBJECT, dateET.getText().toString() + " " + p.getName() + " 다녀와서");
         intent.putExtra(Intent.EXTRA_TEXT, dateET.getText().toString() + " " + p.getName() + "에 다녀왔습니다.\n" + opinion);
-        intent.setType("text/plain");
+
+        /*
+        알고리즘
+        이미지를 선택한 경우
+        무조건 selected
+
+        이미지를 선택하지 않은 경우
+        DB에 있음 전에 선택했던 이미지 선택
+        DB에 없음 plain
+        */
+        if (selectedImage != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, selectedImage);
+            intent.setType("image/png");
+        } else {
+            if (p.getUserPhoto() == null) {
+                intent.setType("text/plain");
+            } else {
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(p.getUserPhoto()));
+                intent.setType("image/png");
+            }
+        }
+
         startActivity(intent);
     }
 

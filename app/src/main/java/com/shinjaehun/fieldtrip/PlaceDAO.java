@@ -23,7 +23,8 @@ public class PlaceDAO {
             DBHelper.COLUMN_PLACE_NAME, DBHelper.COLUMN_PLACE_PIC, DBHelper.COLUMN_PLACE_LOCATION,
             DBHelper.COLUMN_PLACE_DESCRIPTION, DBHelper.COLUMN_PLACE_DETAIL,
             DBHelper.COLUMN_PLACE_VISITED, DBHelper.COLUMN_PLACE_THE_DATE,
-            DBHelper.COLUMN_PLACE_SCORE, DBHelper.COLUMN_PLACE_USER_INPUT };
+            DBHelper.COLUMN_PLACE_SCORE, DBHelper.COLUMN_PLACE_USER_INPUT,
+            DBHelper.COLUMN_PLACE_USER_PHOTO };
 
     public PlaceDAO(Context c) {
         dbHelper = DBHelper.getInstance(c);
@@ -49,6 +50,7 @@ public class PlaceDAO {
         dbHelper.close();
     }
 
+    /* 차후에 교사가 place 자료를 입력할 수 있도록 App을 변경할 때 사용할 메소드
     public Place createPlace(String type, String name, String pic, String map, String location, String description, String detail) {
         ContentValues values = new ContentValues();
         values.put(DBHelper.COLUMN_PLACE_TYPE, type);
@@ -58,8 +60,6 @@ public class PlaceDAO {
         values.put(DBHelper.COLUMN_PLACE_DESCRIPTION, description);
         values.put(DBHelper.COLUMN_PLACE_DETAIL, detail);
 
-        /* 사용자 입력 정보는 어떻게 처리할 것인가? :: 아직 구현 안 함. */
-
         long insertId = database.insert(DBHelper.TABLE_PLACES, null, values);
         Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
                 DBHelper.COLUMN_PLACE_ID + " = " + insertId, null, null, null, null);
@@ -67,33 +67,6 @@ public class PlaceDAO {
         Place newPlace = cursorToPlace(cursor);
         cursor.close();
         return newPlace;
-    }
-
-    public void updatePlace(long id, int visited, String theDate, String score, String userInput) {
-//        Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
-//                DBHelper.COLUMN_PLACE_ID + " = ?",
-//                new String[] { String.valueOf(id) }, null, null, null);
-//        //이렇게 직접 query 가능, ID에 해당하는 cursor 리턴하기
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//        }
-//        Place place = cursorToPlace(cursor);
-//        //cursor가 가리키는 place 리턴
-//        //cursor.close()로 종료해줘야 하는 것 아닌가?
-//
-        Log.v(TAG, "newValue visited : " + visited);
-        Log.v(TAG, "newValue theDate : " + theDate);
-        Log.v(TAG, "newValue score : " + score);
-        Log.v(TAG, "newValue userInput : " + userInput);
-
-        ContentValues newValues = new ContentValues();
-        newValues.put(DBHelper.COLUMN_PLACE_VISITED, visited);
-        newValues.put(DBHelper.COLUMN_PLACE_THE_DATE, theDate);
-        newValues.put(DBHelper.COLUMN_PLACE_SCORE, score);
-        newValues.put(DBHelper.COLUMN_PLACE_USER_INPUT, userInput);
-
-//        long id = place.getId();
-        database.update(DBHelper.TABLE_PLACES, newValues, DBHelper.COLUMN_PLACE_ID + " = " + id, null);
     }
 
     public void deletePlace(Place place) {
@@ -115,6 +88,36 @@ public class PlaceDAO {
             cursor.close();
         }
         return listPlaces;
+    }
+    */
+
+    public void updatePlace(long id, int visited, String theDate, String score, String userInput, String userPhoto) {
+//        Cursor cursor = database.query(DBHelper.TABLE_PLACES, allColumns,
+//                DBHelper.COLUMN_PLACE_ID + " = ?",
+//                new String[] { String.valueOf(id) }, null, null, null);
+//        //이렇게 직접 query 가능, ID에 해당하는 cursor 리턴하기
+//        if (cursor != null) {
+//            cursor.moveToFirst();
+//        }
+//        Place place = cursorToPlace(cursor);
+//        //cursor가 가리키는 place 리턴
+//        //cursor.close()로 종료해줘야 하는 것 아닌가?
+//
+        Log.v(TAG, "newValue visited : " + visited);
+        Log.v(TAG, "newValue theDate : " + theDate);
+        Log.v(TAG, "newValue score : " + score);
+        Log.v(TAG, "newValue userInput : " + userInput);
+        Log.v(TAG, "newValue userPhoto : " + userPhoto);
+
+        ContentValues newValues = new ContentValues();
+        newValues.put(DBHelper.COLUMN_PLACE_VISITED, visited);
+        newValues.put(DBHelper.COLUMN_PLACE_THE_DATE, theDate);
+        newValues.put(DBHelper.COLUMN_PLACE_SCORE, score);
+        newValues.put(DBHelper.COLUMN_PLACE_USER_INPUT, userInput);
+        newValues.put(DBHelper.COLUMN_PLACE_USER_PHOTO, userPhoto);
+
+//        long id = place.getId();
+        database.update(DBHelper.TABLE_PLACES, newValues, DBHelper.COLUMN_PLACE_ID + " = " + id, null);
     }
 
     public List<Place> getPlacesByType(String type) {
@@ -158,6 +161,8 @@ public class PlaceDAO {
     }
 
     protected Place cursorToPlace(Cursor cursor) {
+        //제발 DB에 COLUMN 하나 추가하면 여기에도 정보 업데이트 하는 거 좀 잊지 마라!!!
+
         Place place = new Place();
         place.setId(cursor.getLong(0));
         //cursor.get()은 DB 테이블에서 현재 cursor가 가리키는 data를 가져옴
@@ -172,6 +177,7 @@ public class PlaceDAO {
         place.setTheDate(cursor.getString(8));
         place.setScore(cursor.getString(9));
         place.setUserInput(cursor.getString(10));
+        place.setUserPhoto(cursor.getString(11));
         return place;
     }
 
