@@ -22,11 +22,22 @@ public class ListPlacesAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private Context context;
 
+//    public ListPlacesAdapter (Context c, List<Place> listPlaces) {
+//        this.context = c;
+//        this.setItems(listPlaces);
+//        this.inflater = LayoutInflater.from(context);
+//        //현재 context에서 LayoutInflater 얻어오기
+//    }
+
     public ListPlacesAdapter (Context c, List<Place> listPlaces) {
         this.context = c;
         this.setItems(listPlaces);
         this.inflater = LayoutInflater.from(context);
         //현재 context에서 LayoutInflater 얻어오기
+    }
+
+    public void add (Place p) {
+        places.add(p);
     }
 
     @Override
