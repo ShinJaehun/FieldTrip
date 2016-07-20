@@ -24,7 +24,7 @@ import java.util.List;
 public class CategoryActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String EXTRA_SELECTED_CATEGORY = "extra_key_selected_category";
-    public static final String TAG = "HistoryActivity";
+    public static final String TAG = "CategoryActivity";
     //Debuging을 위한 TAG - 나중에 삭제할 것
 
     ListView listViewPlaces;
@@ -172,20 +172,27 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Place clickedPlace = adapter.getItem(position);
+//        Log.v(TAG, "item value - position : " + position);
+        Log.v(TAG, "item value - id : " + id);
+//        Place clickedPlace = adapter.getItem(position);
         //adapter를 이용해서 선택된 place 불러오기
 
         //Place clickedPlace = placeDAO.getPlaceById(position);
         //이런 형태의 place 불러오기는 안된다. position은 dapter에서 현재 선택된 ID이며
         //getPlaceById의 인자로 넘기는 ID는 DB에 저장된 ID이기 때문이다...
 
-        long placeId = clickedPlace.getId();
+//        long placeId = clickedPlace.getId();
+//        Log.v(TAG, "id : " + placeId);
 
-        Log.d(TAG, "clickedItem : " + clickedPlace.getName());
+
+//        Log.d(TAG, "clickedItem : " + clickedPlace.getName());
         //Debuging을 위한 TAG - 나중에 삭제할 것
 
         Intent intent = new Intent(this, PlaceActivity.class);
-        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, placeId);
+//        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, placeId);
+//        이렇게 할 필요가 없다. 걍 id 값을 쓰면 돼!
+        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, id);
+
 
 //        intent.putExtra(PlaceActivity.EXTRA_SELECTED_PLACE, clickedPlace);
         startActivity(intent);

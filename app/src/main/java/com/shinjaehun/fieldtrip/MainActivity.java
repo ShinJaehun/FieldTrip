@@ -15,6 +15,8 @@ import android.widget.ImageView;
  */
 public class MainActivity extends AppCompatActivity {
 
+    DBHelper dbHelper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        dbHelper = DBHelper.getInstance(this);
+        //CategoryActiviy에서 DB에 들어간 raw data를 화면에 표시하려면 그 전에 먼저 DBHelper가 한번은 실행되어야 한다.
 
         ImageView peopleIV = (ImageView)findViewById(R.id.image_people);
         peopleIV.setOnClickListener(new Button.OnClickListener(){
@@ -70,4 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
+    }
 }
