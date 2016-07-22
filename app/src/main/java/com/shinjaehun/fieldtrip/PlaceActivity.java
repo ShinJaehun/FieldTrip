@@ -103,4 +103,5 @@ public class PlaceActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_container, fragment);
         ft.commit();
     }
+
 }

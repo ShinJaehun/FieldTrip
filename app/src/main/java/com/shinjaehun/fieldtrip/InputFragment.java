@@ -65,6 +65,7 @@ public class InputFragment extends Fragment {
 
     private static final String DESCRIBABLE_KEY = "describable_key";
     private static final int REQ_CODE_SELECT_IMAGE = 100;
+    long id;
 
 //    public static InputFragment newInstance(Place place) {
 
@@ -85,7 +86,7 @@ public class InputFragment extends Fragment {
 //        place = (Place)getArguments().getSerializable(DESCRIBABLE_KEY);
         //place 받아오기
 
-        final long id = getArguments().getLong(DESCRIBABLE_KEY);
+        id = getArguments().getLong(DESCRIBABLE_KEY);
         final PlaceDAO placeDAO = new PlaceDAO(this.getActivity());
         final Place place = placeDAO.getPlaceById(id);
 
@@ -208,12 +209,26 @@ public class InputFragment extends Fragment {
                 }
                 // DB 업데이트
 
-                getActivity().finish();
+//                getActivity().finish();
                 //activity를 종료해서 다시 categoryActivity로 돌아간다.
+
+                InformationFragment informationFragment = InformationFragment.newInstance(id);
+                openFragment(informationFragment);
             }
         });
 
         return v;
+    }
+
+    private void openFragment(final Fragment fragment) {
+        //Fragment 교체를 위해 FragmentTransaction을 시작하는 부분을 openFragment()로 넘김
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+        //프레그먼트 전환할 때 애니메이션 효과 추가
+        ft.replace(R.id.fragment_container, fragment);
+        ft.commit();
     }
 
     @Override
