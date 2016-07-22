@@ -126,6 +126,8 @@ public class InputFragment extends Fragment {
             } else {
                 ratingRB.setRating(0.0f);
             }
+//            Log.v(TAG, "Get Rating : " + place.getScore() + "!\n");
+
 
             if (place.getUserInput() != null) {
                 opinionET.setText(place.getUserInput());
@@ -136,6 +138,8 @@ public class InputFragment extends Fragment {
             if (place.getUserPhoto() != null) {
                 try {
                     InputStream imageStream = getActivity().getContentResolver().openInputStream(Uri.parse(place.getUserPhoto()));
+                    Log.v(TAG, "Get User Photo Image : " + Uri.parse(place.getUserPhoto()).toString());
+
                     Bitmap image_bitmap = BitmapFactory.decodeStream(imageStream);
                     //place에서 사진 경로가 저장되어 있는 String을 URI 형태로 변환하고
 
@@ -303,8 +307,9 @@ public class InputFragment extends Fragment {
         String opinion = opinionET.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
 
-        intent.putExtra(Intent.EXTRA_SUBJECT, dateET.getText().toString() + " " + p.getName() + " 다녀와서");
-        intent.putExtra(Intent.EXTRA_TEXT, dateET.getText().toString() + " " + p.getName() + "에 다녀왔습니다.\n" + opinion);
+        intent.putExtra(Intent.EXTRA_SUBJECT, dateET.getText().toString() + " " + p.getName());
+        intent.putExtra(Intent.EXTRA_TEXT, dateET.getText().toString() + " " + p.getName() + "에 다녀왔습니다.\n" + "별점 : " + (int)(ratingRB.getRating()) + "점!\n" + opinion);
+//        Log.v(TAG, "Rating : " + ratingRB.getRating() + "!\n");
 
         /*
         알고리즘

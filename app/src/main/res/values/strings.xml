@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FieldTrip</string>
+    <string name="app_name">제주현장체험학습</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
