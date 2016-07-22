@@ -202,10 +202,36 @@ public class InputFragment extends Fragment {
                 String score = String.valueOf(ratingRB.getRating());
                 String userInput = opinionET.getText().toString();
 
-                if (selectedImage == null) {
-                    placeDAO.updatePlace(id, 1, date, score, userInput, null);
-                } else {
+                        /*
+        알고리즘
+        이미지를 선택한 경우
+        무조건 selected
+
+        이미지를 선택하지 않은 경우
+        DB에 있음 전에 선택했던 이미지 선택
+        DB에 없음 plain
+        */
+//                if (selectedImage != null) {
+//                    intent.putExtra(Intent.EXTRA_STREAM, selectedImage);
+//                    intent.setType("image/png");
+//                } else {
+//                    if (p.getUserPhoto() == null) {
+//                        intent.setType("text/plain");
+//                    } else {
+//                        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(p.getUserPhoto()));
+//                        intent.setType("image/png");
+//                    }
+//                }
+
+                if (selectedImage != null) {
                     placeDAO.updatePlace(id, 1, date, score, userInput, selectedImage.toString());
+
+                } else {
+                    if (place.getUserInput() == null) {
+                        placeDAO.updatePlace(id, 1, date, score, userInput, null);
+                    } else {
+                        placeDAO.updatePlace(id, 1, date, score, userInput, place.getUserPhoto());
+                    }
                 }
                 // DB 업데이트
 
@@ -225,7 +251,8 @@ public class InputFragment extends Fragment {
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+        ft.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left);
+//        ft.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
         //프레그먼트 전환할 때 애니메이션 효과 추가
         ft.replace(R.id.fragment_container, fragment);
         ft.commit();

@@ -117,7 +117,8 @@ public class InformationFragment extends Fragment {
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+        ft.setCustomAnimations(R.animator.enter_from_left, R.animator.exit_to_right);
+//        ft.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
         //프레그먼트 전환할 때 애니메이션 효과 추가
         ft.replace(R.id.fragment_container, fragment);
         ft.commit();
