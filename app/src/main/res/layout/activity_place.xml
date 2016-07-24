@@ -59,7 +59,7 @@
         android:backgroundTint="@color/primary"/>
         -->
 
-    <!--
+<!--
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/user_input"
         android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
         fab:fab_colorNormal="@color/primary"
         fab:fab_colorPressed="@color/primary_pressed"
         fab:fab_colorRipple="@color/ripple" />
-    -->
+-->
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -86,8 +86,8 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <!--
 
+    <!--
     <ImageButton
         android:id="@+id/user_input"
         android:layout_width="60dp"
@@ -97,8 +97,8 @@
         android:src="@mipmap/ic_create_white_24dp"
         android:layout_marginTop="430dp"
         android:layout_marginLeft="270dp"/>
-
         -->
+
 
 
 </android.support.design.widget.CoordinatorLayout>
