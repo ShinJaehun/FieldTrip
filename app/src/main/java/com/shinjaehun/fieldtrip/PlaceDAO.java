@@ -156,6 +156,7 @@ public class PlaceDAO {
         Place place = cursorToPlace(cursor);
         //cursor가 가리키는 place 리턴
         //cursor.close()로 종료해줘야 하는 것 아닌가?
+        cursor.close();
 
         return place;
     }
